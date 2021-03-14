@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+    <springProperty scope="context" name="application.name" source="spring.application.name" />
+    <springProperty scope="context" name="log.path" source="apps.log.path" />
+    <springProperty scope="context" name="idc" source="CSW.common.currentDC" />
+    <springProperty scope="context" name="root.level" source="logback.root.level" />
+    <springProperty scope="context" name="applog.level" source="applog.level" />
+
+    <!-- third party logs level-->
+    <springProperty scope="context" name="com.alibaba.level" source="logback.com.alibaba.level" />
+    <springProperty scope="context" name="org.apache.level" source="logback.org.apache.level" />
+    <springProperty scope="context" name="org.springframework.level" source="logback.org.springframework.level" />
+    <springProperty scope="context" name="com.fasterxml.level" source="logback.com.fasterxml.level" />
+    <springProperty scope="context" name="org.hibernate.level" source="logback.org.hibernate.level" />
+    <springProperty scope="context" name="org.jboss.level" source="logback.org.jboss.level" />
+    <springProperty scope="context" name="org.eclipse.level" source="logback.org.eclipse.level" />
+    <springProperty scope="context" name="com.googlecode.level" source="logback.com.googlecode.level" />
+    <springProperty scope="context" name="io.netty.level" source="logback.io.netty.level" />
+    <springProperty scope="context" name="com.google.level" source="logback.com.google.level" />
+    <springProperty scope="context" name="com.union.level" source="logback.com.union.level" />
+    <springProperty scope="context" name="com.github.level" source="logback.com.github.level" />
+    <springProperty scope="context" name="rocketmq.client.level" source="logback.rocketmq.client.level" />
+    <springProperty scope="context" name="org.mybatis.level" source="logback.org.mybatis.level" />
+    <springProperty scope="context" name="org.ehcache.level" source="logback.org.ehcache.level" />
+
+    <!-- nucc logs logs level-->
+    <springProperty scope="context" name="access.level" source="logback.access.level" />
+    <springProperty scope="context" name="alarm.level" source="logback.alarm.level" />
+    <springProperty scope="context" name="monitor.level" source="logback.monitor.level" />
+    <springProperty scope="context" name="unstructured.level" source="logback.unstructured.level" />
+
+    <!--native sl4j log for unstructured log, loghead:logTime|level|thread|traceId|idc|ip|msg -->
+    <appender name="unstructured" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.path}/${application.name}_unstrct.log</file>
+        <encoder>
+            <pattern>%date{ISO8601}|%level|%thread|%X{traceId}|${idc}|%X{ip}|%logger{16} %msg%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.path}/${application.name}_unstrct.%d{yyyy-MM-dd}.%i.zip</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>128GB</totalSizeCap>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>500MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+
+    <!-- application logs-->
+    <logger name="com.mastercard" additivity="false" level="${applog.level:-INFO}">
+        <appender-ref ref="unstructured" />
+    </logger>
+    
+    <!-- third party logs-->
+    <logger name="com.alibaba" additivity="false" level="${com.alibaba.level:-WARN}">
+        <appender-ref ref="unstructured"/>
+    </logger>
+    <logger name="org.apache" additivity="false" level="${org.apache.level:-WARN}">
+        <appender-ref ref="unstructured"/>
+    </logger>
+    <logger name="org.springframework" additivity="false" level="${org.springframework.level:-WARN}">
+        <appender-ref ref="unstructured"/>
+    </logger>
+        <logger name="com.fasterxml" additivity="false" level="${com.fasterxml.level:-WARN}">
+        <appender-ref ref="unstructured"/>
+    </logger>
+        <logger name="org.hibernate" additivity="false" level="${org.hibernate.level:-WARN}">
+        <appender-ref ref="unstructured"/>
+    </logger>
+        <logger name="org.jboss" additivity="false" level="${org.jboss.level:-WARN}">
+        <appender-ref ref="unstructured"/>
+    </logger>
+        <logger name="org.eclipse" additivity="false" level="${org.eclipse.level:-WARN}">
+        <appender-ref ref="unstructured"/>
+    </logger>
+    <logger name="com.googlecode" additivity="false" level="${com.googlecode.level:-WARN}">
+        <appender-ref ref="unstructured"/>
+    </logger>
+    <logger name="io.netty" additivity="false" level="${io.netty.level:-WARN}">
+        <appender-ref ref="unstructured"/>
+    </logger>
+        <logger name="com.google" additivity="false" level="${com.google.level:-WARN}">
+        <appender-ref ref="unstructured"/>
+    </logger>
+    <logger name="com.union" additivity="false" level="${com.union.level:-WARN}">
+        <appender-ref ref="unstructured"/>
+    </logger>
+    <logger name="com.github" additivity="false" level="${com.github.level:-WARN}">
+        <appender-ref ref="unstructured"/>
+    </logger>
+    <logger name="org.ehcache" additivity="false" level="${org.ehcache.level:-WARN}">
+        <appender-ref ref="unstructured"/>
+    </logger>
+        <logger name="RocketmqRemoting" additivity="false" level="${rocketmq.client.level:-WARN}">
+        <appender-ref ref="unstructured" />
+    </logger>
+    <logger name="RocketmqClient" additivity="false" level="${rocketmq.client.level:-WARN}">
+        <appender-ref ref="unstructured" />
+    </logger>
+    <logger name="RocketmqCommon" additivity="false" level="${rocketmq.client.level:-WARN}">
+        <appender-ref ref="unstructured" />
+    </logger>
+    <logger name="org.mybatis" additivity="false" level="${org.mybatis.level:-WARN}">
+        <appender-ref ref="unstructured" />
+    </logger>
+    <logger name="mybatis.sql" additivity="false" level="${org.mybatis.level:-INFO}">
+        <appender-ref ref="unstructured" />
+    </logger>
+   	<logger name="java.sql" additivity="false" level="${org.mybatis.level:-INFO}">
+        <appender-ref ref="unstructured" />
+    </logger>
+    <logger name="org.ehcache" additivity="false" level="${org.ehcache.level:-WARN}">
+        <appender-ref ref="unstructured" />
+    </logger>
+
+    <!-- nucc logs-->
+    <logger name="accesslog" additivity="false" level="${access.level:-INFO}">
+        <appender-ref ref="unstructured"/>
+    </logger>
+    <logger name="alarmlog" additivity="false" level="${alarm.level:-WARN}">
+        <appender-ref ref="unstructured"/>
+    </logger>
+    <logger name="monitorlog" additivity="false" level="${monitor.level:-INFO}">
+        <appender-ref ref="unstructured"/>
+    </logger>
+
+    <root level="INFO">
+        <appender-ref ref="unstructured" />
+    </root>
+</configuration>
