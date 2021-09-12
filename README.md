@@ -10,8 +10,6 @@ github springboot issues/12455)
 
 To deploy as a WAR to any Servlet 3.1+ container, you can extend and include [`AbstractReactiveWebInitializer`](https://docs.spring.io/spring-framework/docs/5.3.4/javadoc-api/org/springframework/web/server/adapter/AbstractReactiveWebInitializer.html) in the WAR. That class wraps an `HttpHandler` with `ServletHttpHandlerAdapter` and registers that as a `Servlet`.
 
-所以尝试了下： [demo project](https://github.com/liuliuzo/webflux_war)
-
 #加载springboot上下文
 
 AbstractReactiveWebInitializer 的`onStartup(ServletContext servletContext)`是和容器的钩子，我们这里需要重写createApplicationContext来加载springboot的上下文。
