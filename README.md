@@ -1,4 +1,4 @@
-经过我的调研，结论是不建议使用war包部署，好在是有Workaround    ：（
+经过我的调研，结论是webflux不建议使用war包部署，好在是有Workaround    ：（
 
 github springboot issues/12455)
 
